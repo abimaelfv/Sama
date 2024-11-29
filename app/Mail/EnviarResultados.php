@@ -17,6 +17,7 @@ class EnviarResultados extends Mailable
 
     public $name;
     public $archivos;
+    public $ruta;
 
     /**
      * Create a new message instance.
@@ -25,7 +26,8 @@ class EnviarResultados extends Mailable
     {
         $user = User::find($user_id);
         $this->name = $user->name;
-        $this->archivos = Archivos::where('env_id', $env_id)->get();
+        $this->ruta = route('consultar', $user->documento);
+        // $this->archivos = Archivos::where('env_id', $env_id)->get();
     }
 
     /**
@@ -55,6 +57,7 @@ class EnviarResultados extends Mailable
      */
     public function attachments(): array
     {
+        /*
         $attachments = [];
         foreach ($this->archivos as $doc) {
             $ext = pathinfo($doc->arc_file, PATHINFO_EXTENSION);
@@ -67,5 +70,8 @@ class EnviarResultados extends Mailable
             }
         }
         return $attachments;
+
+        */
+        return [];
     }
 }
