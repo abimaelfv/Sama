@@ -121,7 +121,7 @@ const enviar = () => {
                                     <td class="px-6 py-4 text-center">
                                         <button class="bg-prim text-white py-1 px-2 rounded text-sm"
                                             @click="abrirModal(user)">
-                                            <i class="fa-solid fa-paper-plane"></i>
+                                            <i class="fa-solid fa-upload"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -137,13 +137,13 @@ const enviar = () => {
             <template #content>
                 <div>
                     <InputLabel for="email" value="Usuario" />
-                    <TextInput :value="user?.name" type="text" class="mt-1 block w-full bg-gray-100" disabled />
+                    <TextInput :value="user?.name" type="text" class="mt-1 block rounded-none w-full bg-gray-100" disabled />
                 </div>
 
-                <div class="mt-4">
+                <div class="mt-6">
                     <InputLabel for="archivo" value="Cargar archivos" />
                     <input type="file" multiple ref="fileInput" @change="subir"
-                        class="mt-4 block w-full border border-gray-200 focus:shadow-sm rounded-sm text-sm focus:z-10 focus:outline-0 focus:border-gray-200 file:border-0 file:bg-gray-100 ltr:file:mr-4 rtl:file:ml-4 file:py-3 file:px-4" />
+                        class="mt-2 block w-full border border-gray-200 focus:shadow-sm rounded-sm text-sm focus:z-10 focus:outline-0 focus:border-gray-200 file:border-0 file:bg-gray-100 ltr:file:mr-4 rtl:file:ml-4 file:py-3 file:px-4" />
                     <div v-if="form.archivos.length > 0" class="mt-2">
                         <p class="mb-2">Archivos seleccionados:</p>
                         <ul>
@@ -163,10 +163,10 @@ const enviar = () => {
 
                 <PrimaryButton class="ms-3" @click="enviar" :disabled="form.archivos.length === 0 || loading">
                     <template v-if="loading">
-                        <i class="fa fa-spinner fa-spin mr-2"></i> Enviando...
+                        <i class="fa fa-spinner fa-spin mr-2"></i> Cargar...
                     </template>
                     <template v-else>
-                        Enviar
+                        Cargar
                     </template>
                 </PrimaryButton>
 

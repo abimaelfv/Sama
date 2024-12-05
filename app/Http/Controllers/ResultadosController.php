@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Mail\EnviarResultados;
+use App\Models\Archivos;
 use App\Models\Envios;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 
 class ResultadosController extends Controller
@@ -21,6 +22,35 @@ class ResultadosController extends Controller
         return inertia('Resultados', [
             'users' => $users
         ]);
+    }
+
+    public function consultar($documento)
+    {
+        $user = User::where('documento', $documento)->first();
+        $envios = Envios::with('archivos')
+            ->where('user_id', $user->id)
+            ->get();
+
+        return inertia('Resultados/Consultar', [
+            'envios' => $envios
+        ]);
+    }
+
+    public function descargar($file)
+    {
+        $documento = Archivos::where('arc_file', $file)->where('arc_estado', 1)->first();
+
+        if (!$documento) {
+            abort(404);
+        } else {
+            $name = $documento->arc_nombre;
+            $filePath = storage_path('app/public/archivos/' . $documento->arc_file);
+            if (File::exists($filePath)) {
+                return response()->download($filePath, $name);
+            } else {
+                abort(404);
+            }
+        }
     }
 
     public function enviar(Request $request)

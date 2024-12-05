@@ -4,17 +4,16 @@ use App\Actions\Fortify\CompletarRegistro;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ResultadosController;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return redirect()->route('login');
-    // return Inertia::render('Bienvenido', [
-    //     'canLogin' => Route::has('login'),
-    //     'canRegister' => Route::has('register'),
-    //     'laravelVersion' => Application::VERSION,
-    //     'phpVersion' => PHP_VERSION,
-    // ]);
+    if (Auth::check()) {
+        return redirect()->route('panel');
+    } else {
+        return redirect()->route('login');
+    }
 });
 
 Route::middleware([
@@ -30,8 +29,9 @@ Route::middleware([
     Route::controller(ResultadosController::class)->group(function () {
         Route::get('/resultados', 'index')->name('resultados');
         Route::post('/resultados/enviar', 'enviar')->name('resultados.enviar');
+        Route::get('/resultados/consultar/{dni}', 'consultar')->name('consultar');
+        Route::get('/resultados/descargar/{file}', 'descargar')->name('descargar');
     });
-
 });
 
 Route::middleware(['guest'])->controller(GoogleController::class)->group(function () {

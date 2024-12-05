@@ -28,6 +28,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => mb_strtoupper(fake()->name(), 'UTF-8'),
+            'documento' => fake()->randomNumber(8),
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->phoneNumber(),
             'email_verified_at' => now(),
