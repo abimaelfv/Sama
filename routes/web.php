@@ -3,7 +3,6 @@
 use App\Actions\Fortify\CompletarRegistro;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ResultadosController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,7 +22,8 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/panel', function () {
-        return Inertia::render('Dashboard');
+        return redirect()->route('resultados');
+        // return Inertia::render('Dashboard');
     })->name('panel');
 
     Route::controller(ResultadosController::class)->group(function () {
